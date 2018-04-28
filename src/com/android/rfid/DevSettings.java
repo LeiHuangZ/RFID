@@ -516,4 +516,44 @@ public class DevSettings implements IDev {
 		return false;
 	}
 
+	@Override
+	public void addAlwaysApps(String pkgName) {
+		Intent intent = new Intent();
+		intent.setAction("android.rfid.ALWAYS_RUN");
+		intent.putExtra("pkgName", pkgName);
+		context.sendBroadcast(intent);
+	}
+
+	@Override
+	public void deleteAlwaysApps(String pkgName) {
+		Intent intent = new Intent();
+		intent.putExtra("isDelect", true);
+		intent.putExtra("pkgName", pkgName);
+		intent.setAction("android.rfid.ALWAYS_RUN");
+		context.sendBroadcast(intent);
+	}
+
+	@Override
+	public void clearAlwaysApps() {
+		Intent intent = new Intent();
+		intent.putExtra("isClear", true);
+		intent.setAction("android.rfid.ALWAYS_RUN");
+		context.sendBroadcast(intent);
+	}
+
+	@Override
+	public List<String> queryAlwaysApps() {
+		Uri appsUri = Uri.parse("content://android.rfid.wob.WOBContentProvider/alwaysapps");
+		List<String> arrayList = new ArrayList<String>();
+		Cursor cursor = context.getContentResolver().query(appsUri, new String[] { "_id, pkgName" }, null, null, null);
+		if (cursor != null) {
+			while (cursor.moveToNext()) {
+				String name = cursor.getString(cursor.getColumnIndex("pkgName"));
+				arrayList.add(name);
+			}
+			cursor.close();
+		}
+		return arrayList;
+	}
+
 }

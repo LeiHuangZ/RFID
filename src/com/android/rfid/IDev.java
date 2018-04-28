@@ -217,4 +217,20 @@ public interface IDev {
 	 * 查询应用黑名单
 	 */
 	public List<String> queryBlackAppsList();
+	/**
+	 * 添加始终运行APP
+	 */
+	public void addAlwaysApps(String pkgName);
+	/**
+	 * 删除始终运行APP
+	 */
+	public void deleteAlwaysApps(String pkgName);
+	/**
+	 * 清除始终运行APP
+	 */
+	public void clearAlwaysApps();
+	/**
+	 * 查询始终运行APP
+	 */
+	public List<String> queryAlwaysApps();
 }
